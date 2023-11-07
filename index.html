@@ -1,10 +1,100 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Machine Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Load Balancer Time Zones Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            padding: 20px;
+        }
+        .load-balancer {
+            background-color: #3498db;
+            color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            animation: bounce 2s infinite;
+        }
+        .server {
+            background-color: #2ecc71;
+            color: #fff;
+            padding: 20px;
+            margin: 20px;
+            border-radius: 10px;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-10px);
+            }
+            60% {
+                transform: translateY(-5px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.1);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+    </style>
 </head>
 <body>
-    <h1>Machine Details</h1>
-    <p>Hostname: {HOSTNAME}</p>
+    <h1>Load Balancer Time Zones Demo</h1>
+    <p>This page demonstrates a load balancer routing requests to different web servers and displaying the current time in various time zones.</p>
+    
+    <div class="load-balancer">
+        <h2>Load Balancer</h2>
+        <p>Routes requests to:</p>
+        <div class="server" id="server1" style="display: none;">
+            <h3>IP: {HOSTNAME}</h3>
+            <h2>Server 1 - New York</h2>
+            <p id="new-york-time"></p>
+        </div>
+        <div class="server" id="server2" style="display: none;">
+            <h3>IP: {HOSTNAME}</h3>
+            <h2>Server 2 - India</h2>
+            <p id="india-time"></p>
+        </div>
+    </div>
+
+    <script>
+        const servers = ["{SERVER}"];
+        let currentIndex = 0;
+
+        function updateTimes() {
+            const newYorkTime = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
+            const indiaTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
+
+            document.getElementById('new-york-time').textContent = `New York: ${newYorkTime}`;
+            document.getElementById('india-time').textContent = `India: ${indiaTime}`;
+        }
+
+        function showNextServer() {
+            document.getElementById(servers[currentIndex]).style.display = 'block';
+            currentIndex = (currentIndex + 1) % servers.length;
+        }
+
+        setInterval(showNextServer, 5000); // Change server every 5 seconds
+        showNextServer(); // Show the initial server
+        setInterval(updateTimes, 1000);
+        updateTimes();
+    </script>
+    
 </body>
 </html>
