@@ -63,26 +63,18 @@
         <p>Routes requests to:</p>
         <div class="server" id="server1" style="display: none;">
             <h3>IP: {HOSTNAME}</h3>
-            <h2>Server 1 - New York</h2>
-            <p id="new-york-time"></p>
-        </div>
-        <div class="server" id="server2" style="display: none;">
-            <h3>IP: {HOSTNAME}</h3>
-            <h2>Server 2 - India</h2>
-            <p id="india-time"></p>
+            <h2>Country: Australia</h2>
+            <p id="aus-time"></p>
         </div>
     </div>
 
     <script>
-        const servers = ["{SERVER}"];
+        const servers = ["server1"];
         let currentIndex = 0;
 
         function updateTimes() {
-            const newYorkTime = new Date().toLocaleString('en-US', { timeZone: 'America/New_York' });
-            const indiaTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Kolkata' });
-
-            document.getElementById('new-york-time').textContent = `New York: ${newYorkTime}`;
-            document.getElementById('india-time').textContent = `India: ${indiaTime}`;
+            const ausTime = new Date().toLocaleString('en-US', { timeZone: 'Australia/Sydney' });
+            document.getElementById('aus-time').textContent = `${ausTime}`;
         }
 
         function showNextServer() {
